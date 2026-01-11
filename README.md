@@ -1,1 +1,1 @@
-# Deriving-complete-test-suites-for-Timed-Input-Output-Finite-State-Machines
+# Deriving exhaustive test suites for Timed Finite State Machines with output delays
