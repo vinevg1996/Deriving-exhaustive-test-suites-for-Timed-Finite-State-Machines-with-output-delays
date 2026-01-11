@@ -1,0 +1,1030 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+
+chan A_i1, A_i2, A_o1, A_o2;
+chan B_i1, B_i2, B_o1, B_o2;
+
+int A_n1, A_n2, B_n1, B_n2;
+
+clock time; // Global time
+clock t; // Global time
+
+chan pf1, pf2;
+chan fe1, fe2;
+
+bool e0 = false;
+bool e1 = false;
+bool e2 = false;
+bool e3 = false;
+
+bool l0 = false;
+bool l1 = false;
+bool l2 = false;
+bool l3 = false;</declaration>
+	<template>
+		<name>SDN</name>
+		<declaration>clock d1;
+clock d2;</declaration>
+		<location id="id0" x="-348" y="-25">
+			<name x="-365" y="-8">empty</name>
+		</location>
+		<location id="id1" x="-552" y="-144">
+			<name x="-569" y="-178">F1</name>
+			<label kind="invariant" x="-620" y="-153">d1&lt;=10</label>
+		</location>
+		<location id="id2" x="-161" y="-144">
+			<name x="-144" y="-170">F2</name>
+			<label kind="invariant" x="-144" y="-153">d2&lt;=7</label>
+		</location>
+		<location id="id3" x="-382" y="-331">
+			<name x="-392" y="-365">F1_F2</name>
+			<label kind="invariant" x="-450" y="-314">(d1&lt;=10)&amp;&amp;(d2&lt;=7)</label>
+		</location>
+		<init ref="id0"/>
+		<transition id="id4">
+			<source ref="id3"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-340" y="-238">d1==10</label>
+			<label kind="synchronisation" x="-323" y="-221">fe1!</label>
+			<label kind="assignment" x="-323" y="-204">l2:=true</label>
+			<nail x="-280" y="-221"/>
+		</transition>
+		<transition id="id5">
+			<source ref="id2"/>
+			<target ref="id3"/>
+			<label kind="guard" x="-204" y="-306">(t&gt;=1)&amp;&amp;(t&lt;7)</label>
+			<label kind="synchronisation" x="-170" y="-280">pf1?</label>
+			<label kind="assignment" x="-170" y="-255">d1:=10,e2:=true,l3:=true</label>
+			<nail x="-195" y="-280"/>
+		</transition>
+		<transition id="id6">
+			<source ref="id3"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-459" y="-229">d2==7</label>
+			<label kind="synchronisation" x="-450" y="-212">fe2!</label>
+			<label kind="assignment" x="-476" y="-195">l1:=true</label>
+			<nail x="-442" y="-246"/>
+		</transition>
+		<transition id="id7">
+			<source ref="id1"/>
+			<target ref="id3"/>
+			<label kind="guard" x="-612" y="-340">(t&gt;=1)&amp;&amp;(t&lt;3)</label>
+			<label kind="synchronisation" x="-578" y="-323">pf2?</label>
+			<label kind="assignment" x="-637" y="-297">d2:=0,e1:=true,l3:=true</label>
+			<nail x="-544" y="-280"/>
+		</transition>
+		<transition id="id8">
+			<source ref="id2"/>
+			<target ref="id0"/>
+			<label kind="guard" x="-306" y="-136">d2==7</label>
+			<label kind="synchronisation" x="-297" y="-119">fe2!</label>
+			<label kind="assignment" x="-323" y="-102">l0:=true</label>
+			<nail x="-255" y="-102"/>
+			<nail x="-255" y="-102"/>
+		</transition>
+		<transition id="id9">
+			<source ref="id0"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-195" y="-68">(t&gt;=1)&amp;&amp;(t&lt;20)</label>
+			<label kind="synchronisation" x="-170" y="-51">pf2?</label>
+			<label kind="assignment" x="-170" y="-34">d2:=0,e3:=true,l2:=true</label>
+			<nail x="-255" y="-34"/>
+			<nail x="-187" y="-68"/>
+		</transition>
+		<transition id="id10">
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="guard" x="-433" y="-136">d1==10</label>
+			<label kind="synchronisation" x="-416" y="-119">fe1!</label>
+			<label kind="assignment" x="-433" y="-93">l0:=true</label>
+			<nail x="-433" y="-110"/>
+		</transition>
+		<transition id="id11">
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-594" y="-76">(t&gt;=1)&amp;&amp;(t&lt;20)</label>
+			<label kind="synchronisation" x="-543" y="-59">pf1?</label>
+			<label kind="assignment" x="-612" y="-42">d1:=0,e0:=true,l1:=true</label>
+			<nail x="-458" y="-59"/>
+			<nail x="-458" y="-59"/>
+		</transition>
+	</template>
+	<template>
+		<name>SDN_ENV</name>
+		<location id="id12" x="-527" y="-127">
+			<name x="-535" y="-161">s0</name>
+		</location>
+		<init ref="id12"/>
+		<transition id="id13">
+			<source ref="id12"/>
+			<target ref="id12"/>
+			<label kind="synchronisation" x="-442" y="-161">fe2?</label>
+			<nail x="-450" y="-212"/>
+			<nail x="-450" y="-34"/>
+		</transition>
+		<transition id="id14">
+			<source ref="id12"/>
+			<target ref="id12"/>
+			<label kind="synchronisation" x="-671" y="-170">pf2!</label>
+			<label kind="assignment" x="-671" y="-153">t:=0</label>
+			<nail x="-629" y="-212"/>
+			<nail x="-629" y="-51"/>
+		</transition>
+		<transition id="id15">
+			<source ref="id12"/>
+			<target ref="id12"/>
+			<label kind="synchronisation" x="-493" y="-144">fe1?</label>
+			<nail x="-484" y="-161"/>
+			<nail x="-484" y="-102"/>
+		</transition>
+		<transition id="id16">
+			<source ref="id12"/>
+			<target ref="id12"/>
+			<label kind="synchronisation" x="-595" y="-144">pf1!</label>
+			<label kind="assignment" x="-595" y="-127">t:=0</label>
+			<nail x="-586" y="-161"/>
+			<nail x="-586" y="-161"/>
+			<nail x="-586" y="-93"/>
+		</transition>
+	</template>
+	<template>
+		<name>A_mutant</name>
+		<declaration>clock x1, x2, x3;</declaration>
+		<location id="id17" x="-1419" y="-85">
+			<name x="-1445" y="-119">q0</name>
+		</location>
+		<location id="id18" x="-1198" y="-212">
+			<name x="-1224" y="-238">q1</name>
+		</location>
+		<location id="id19" x="-1283" y="-85">
+			<name x="-1293" y="-119">Qt1</name>
+			<label kind="invariant" x="-1317" y="-68">x1&lt;=3</label>
+		</location>
+		<location id="id20" x="-1139" y="-85">
+			<name x="-1149" y="-119">Qt2</name>
+			<label kind="invariant" x="-1130" y="-110">(x1&lt;=3)&amp;&amp;
+(x2&lt;=2)</label>
+		</location>
+		<location id="id21" x="-1139" y="51">
+			<name x="-1139" y="17">Qt3</name>
+			<label kind="invariant" x="-1147" y="42">x1&lt;=3</label>
+		</location>
+		<location id="id22" x="-986" y="-212">
+			<name x="-996" y="-246">Qt4</name>
+			<label kind="invariant" x="-994" y="-221">x1&lt;=2</label>
+		</location>
+		<location id="id23" x="-994" y="212">
+			<name x="-977" y="195">Qt6</name>
+			<label kind="invariant" x="-1004" y="229">(x1&lt;=3)&amp;&amp;
+(x2&lt;=3)</label>
+		</location>
+		<location id="id24" x="-748" y="-161">
+			<name x="-758" y="-195">Qt7</name>
+			<label kind="invariant" x="-748" y="-161">(x1&lt;=2)&amp;&amp;
+(x2&lt;=3)</label>
+		</location>
+		<location id="id25" x="-935" y="17">
+			<name x="-945" y="-17">Qt5</name>
+			<label kind="invariant" x="-935" y="8">(x1&lt;=3)&amp;&amp;
+(x2&lt;=2)&amp;&amp;
+(x3&lt;=3)</label>
+		</location>
+		<location id="id26" x="-646" y="59">
+			<name x="-663" y="25">Qt8</name>
+			<label kind="invariant" x="-637" y="59">(x1&lt;=3)&amp;&amp;
+(x2&lt;=2)</label>
+		</location>
+		<location id="id27" x="-408" y="-76">
+			<name x="-418" y="-110">Qt9</name>
+			<label kind="invariant" x="-416" y="-85">x1&lt;=2</label>
+		</location>
+		<location id="id28" x="-289" y="-314">
+			<name x="-299" y="-348">Qt10</name>
+			<label kind="invariant" x="-297" y="-323">x1&lt;=3</label>
+		</location>
+		<location id="id29" x="-544" y="-255">
+			<name x="-554" y="-289">Qt11</name>
+			<label kind="invariant" x="-552" y="-263">x1&lt;=2</label>
+		</location>
+		<init ref="id17"/>
+		<transition id="id30">
+			<source ref="id28"/>
+			<target ref="id18"/>
+			<label kind="guard" x="-416" y="-459">x1==3</label>
+			<label kind="synchronisation" x="-399" y="-442">B_o1!</label>
+			<nail x="-289" y="-425"/>
+			<nail x="-943" y="-425"/>
+		</transition>
+		<transition id="id31">
+			<source ref="id27"/>
+			<target ref="id18"/>
+			<label kind="guard" x="-416" y="-348">x1==2</label>
+			<label kind="synchronisation" x="-408" y="-331">B_o2!</label>
+			<nail x="-408" y="-382"/>
+			<nail x="-935" y="-382"/>
+		</transition>
+		<transition id="id32">
+			<source ref="id26"/>
+			<target ref="id28"/>
+			<label kind="guard" x="-425" y="119">x2==2</label>
+			<label kind="synchronisation" x="-416" y="136">B_o2!</label>
+			<nail x="-646" y="153"/>
+			<nail x="-289" y="153"/>
+		</transition>
+		<transition id="id33">
+			<source ref="id26"/>
+			<target ref="id27"/>
+			<label kind="guard" x="-484" y="25">x1==3</label>
+			<label kind="synchronisation" x="-467" y="42">B_o1!</label>
+			<label kind="assignment" x="-476" y="59">x1:=x2</label>
+			<nail x="-408" y="59"/>
+		</transition>
+		<transition id="id34">
+			<source ref="id25"/>
+			<target ref="id26"/>
+			<label kind="guard" x="-782" y="8">x3==3</label>
+			<label kind="synchronisation" x="-773" y="25">B_o1!</label>
+		</transition>
+		<transition id="id35">
+			<source ref="id29"/>
+			<target ref="id18"/>
+			<label kind="guard" x="-952" y="-476">x1==2</label>
+			<label kind="synchronisation" x="-943" y="-459">B_o2!</label>
+			<nail x="-544" y="-442"/>
+			<nail x="-1198" y="-442"/>
+		</transition>
+		<transition id="id36">
+			<source ref="id24"/>
+			<target ref="id19"/>
+			<label kind="guard" x="-1105" y="-391">x1==2</label>
+			<label kind="synchronisation" x="-1096" y="-374">B_o2!</label>
+			<label kind="assignment" x="-1096" y="-357">x1:=x2</label>
+			<nail x="-748" y="-357"/>
+			<nail x="-1283" y="-357"/>
+		</transition>
+		<transition id="id37">
+			<source ref="id24"/>
+			<target ref="id29"/>
+			<label kind="guard" x="-680" y="-238">x2==3</label>
+			<label kind="synchronisation" x="-671" y="-221">B_o1!</label>
+		</transition>
+		<transition id="id38">
+			<source ref="id25"/>
+			<target ref="id24"/>
+			<label kind="guard" x="-858" y="-93">x1==3</label>
+			<label kind="synchronisation" x="-858" y="-76">B_o1!</label>
+			<label kind="assignment" x="-850" y="-59">x1:=x2,
+x2:=x3</label>
+		</transition>
+		<transition id="id39">
+			<source ref="id22"/>
+			<target ref="id24"/>
+			<label kind="synchronisation" x="-901" y="-204">B_i1?</label>
+			<label kind="assignment" x="-892" y="-187">x2:=0</label>
+		</transition>
+		<transition id="id40">
+			<source ref="id21"/>
+			<target ref="id17"/>
+			<label kind="guard" x="-1401" y="17">x1==3</label>
+			<label kind="synchronisation" x="-1401" y="34">B_o1!</label>
+			<nail x="-1419" y="51"/>
+		</transition>
+		<transition id="id41">
+			<source ref="id23"/>
+			<target ref="id19"/>
+			<label kind="guard" x="-1265" y="178">x1==3</label>
+			<label kind="synchronisation" x="-1265" y="195">B_o1!</label>
+			<label kind="assignment" x="-1265" y="212">x1:=x2</label>
+			<nail x="-1283" y="212"/>
+		</transition>
+		<transition id="id42">
+			<source ref="id25"/>
+			<target ref="id23"/>
+			<label kind="guard" x="-960" y="85">x2==2</label>
+			<label kind="synchronisation" x="-952" y="102">B_o2!</label>
+			<label kind="assignment" x="-952" y="119">x2:=x3</label>
+		</transition>
+		<transition id="id43">
+			<source ref="id21"/>
+			<target ref="id23"/>
+			<label kind="synchronisation" x="-1130" y="102">B_i2?</label>
+			<label kind="assignment" x="-1122" y="119">x2:=0</label>
+		</transition>
+		<transition id="id44">
+			<source ref="id18"/>
+			<target ref="id22"/>
+			<label kind="guard" x="-1130" y="-246">x1==3</label>
+			<label kind="synchronisation" x="-1130" y="-229">B_i2!</label>
+			<label kind="assignment" x="-1130" y="-212">x1:=0</label>
+		</transition>
+		<transition id="id45">
+			<source ref="id22"/>
+			<target ref="id17"/>
+			<label kind="guard" x="-1401" y="-314">x1==2</label>
+			<label kind="synchronisation" x="-1401" y="-297">B_o2!</label>
+			<nail x="-986" y="-280"/>
+			<nail x="-1419" y="-280"/>
+		</transition>
+		<transition id="id46">
+			<source ref="id20"/>
+			<target ref="id25"/>
+			<label kind="synchronisation" x="-1045" y="-68">B_i1?</label>
+			<label kind="assignment" x="-1028" y="-51">x3:=0</label>
+		</transition>
+		<transition id="id47">
+			<source ref="id20"/>
+			<target ref="id21"/>
+			<label kind="guard" x="-1198" y="-51">x2==2</label>
+			<label kind="synchronisation" x="-1190" y="-34">B_o2!</label>
+		</transition>
+		<transition id="id48">
+			<source ref="id20"/>
+			<target ref="id22"/>
+			<label kind="guard" x="-1122" y="-178">x1==3</label>
+			<label kind="synchronisation" x="-1105" y="-161">B_o1!</label>
+			<label kind="assignment" x="-1113" y="-144">x1:=x2</label>
+		</transition>
+		<transition id="id49">
+			<source ref="id19"/>
+			<target ref="id20"/>
+			<label kind="synchronisation" x="-1265" y="-102">B_i2?</label>
+			<label kind="assignment" x="-1265" y="-85">x2:=0</label>
+		</transition>
+		<transition id="id50">
+			<source ref="id19"/>
+			<target ref="id18"/>
+			<label kind="guard" x="-1283" y="-170">x1==3</label>
+			<label kind="synchronisation" x="-1283" y="-153">B_o1!</label>
+		</transition>
+		<transition id="id51">
+			<source ref="id17"/>
+			<target ref="id19"/>
+			<label kind="synchronisation" x="-1401" y="-102">B_i1?</label>
+			<label kind="assignment" x="-1401" y="-85">x1:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name>A_in_mutant</name>
+		<parameter>const int u1, const int v1, const int u2, const int v2</parameter>
+		<location id="id52" x="-425" y="-85">
+			<name x="-435" y="-119">s0</name>
+		</location>
+		<location id="id53" x="-212" y="-85">
+			<name x="-212" y="-119">s1</name>
+		</location>
+		<init ref="id52"/>
+		<transition id="id54">
+			<source ref="id53"/>
+			<target ref="id52"/>
+			<label kind="guard" x="-364" y="-59">(t&gt;u2)&amp;&amp;(t&lt;v2)</label>
+			<label kind="synchronisation" x="-331" y="-42">B_i2!</label>
+			<label kind="assignment" x="-331" y="-25">t:=0</label>
+			<nail x="-246" y="-25"/>
+			<nail x="-382" y="-25"/>
+		</transition>
+		<transition id="id55">
+			<source ref="id52"/>
+			<target ref="id53"/>
+			<label kind="guard" x="-381" y="-195">(t&gt;u1)&amp;&amp;(t&lt;v1)</label>
+			<label kind="synchronisation" x="-348" y="-178">B_i1!</label>
+			<label kind="assignment" x="-348" y="-161">t:=0</label>
+			<nail x="-399" y="-161"/>
+			<nail x="-246" y="-161"/>
+		</transition>
+	</template>
+	<template>
+		<name>A_out_mutant</name>
+		<location id="id56" x="-306" y="-59">
+			<name x="-316" y="-93">s0</name>
+		</location>
+		<init ref="id56"/>
+		<transition id="id57">
+			<source ref="id56"/>
+			<target ref="id56"/>
+			<label kind="synchronisation" x="-330" y="-25">B_o2?</label>
+			<nail x="-272" y="-8"/>
+			<nail x="-348" y="-8"/>
+		</transition>
+		<transition id="id58">
+			<source ref="id56"/>
+			<target ref="id56"/>
+			<label kind="synchronisation" x="-339" y="-144">B_o1?</label>
+			<nail x="-357" y="-127"/>
+			<nail x="-255" y="-127"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">AB_in</name>
+		<parameter>const int u1, const int v1, const int u2, const int v2</parameter>
+		<declaration>// Place local declarations here.</declaration>
+		<location id="id59" x="-876" y="-654">
+			<name x="-886" y="-688">s0</name>
+		</location>
+		<location id="id60" x="-680" y="-722">
+			<urgent/>
+		</location>
+		<location id="id61" x="-493" y="-654">
+			<name x="-485" y="-680">s1</name>
+		</location>
+		<location id="id62" x="-689" y="-561">
+			<urgent/>
+		</location>
+		<init ref="id59"/>
+		<transition id="id63">
+			<source ref="id62"/>
+			<target ref="id59"/>
+			<label kind="synchronisation" x="-808" y="-603">B_i2!</label>
+		</transition>
+		<transition id="id64">
+			<source ref="id61"/>
+			<target ref="id62"/>
+			<label kind="guard" x="-612" y="-595">(t &gt; u2) &amp;&amp; (t &lt; v2)</label>
+			<label kind="synchronisation" x="-587" y="-612">A_i2!</label>
+			<label kind="assignment" x="-570" y="-578">t:=0</label>
+		</transition>
+		<transition id="id65">
+			<source ref="id60"/>
+			<target ref="id61"/>
+			<label kind="synchronisation" x="-595" y="-714">B_i1!</label>
+		</transition>
+		<transition id="id66">
+			<source ref="id59"/>
+			<target ref="id60"/>
+			<label kind="guard" x="-842" y="-697">(t &gt; u1) &amp;&amp; (t &lt; v1)</label>
+			<label kind="synchronisation" x="-816" y="-714">A_i1!</label>
+			<label kind="assignment" x="-791" y="-680">t:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name>AB_out</name>
+		<location id="id67" x="306" y="178">
+			<name x="298" y="144">q0</name>
+		</location>
+		<location id="id68" x="-33" y="-60">
+			<name x="-58" y="-94">minus1</name>
+		</location>
+		<location id="id69" x="595" y="-60">
+			<name x="585" y="-94">plus1</name>
+		</location>
+		<location id="id70" x="306" y="-229">
+			<name x="272" y="-212">ERROR</name>
+		</location>
+		<location id="id71" x="875" y="-246">
+			<name x="884" y="-272">plus2</name>
+		</location>
+		<location id="id72" x="-374" y="-272">
+			<name x="-442" y="-289">minus2</name>
+		</location>
+		<init ref="id67"/>
+		<transition id="id73">
+			<source ref="id72"/>
+			<target ref="id70"/>
+			<label kind="guard" x="-59" y="-450">B_n1!=2</label>
+			<label kind="synchronisation" x="-76" y="-467">A_o2?</label>
+			<nail x="-314" y="-433"/>
+			<nail x="263" y="-425"/>
+		</transition>
+		<transition id="id74">
+			<source ref="id72"/>
+			<target ref="id70"/>
+			<label kind="guard" x="-85" y="-365">B_n1!=1</label>
+			<label kind="synchronisation" x="-93" y="-382">A_o1?</label>
+			<nail x="-144" y="-391"/>
+			<nail x="144" y="-391"/>
+		</transition>
+		<transition id="id75">
+			<source ref="id72"/>
+			<target ref="id68"/>
+			<label kind="guard" x="-263" y="-42">B_n1==2</label>
+			<label kind="synchronisation" x="-272" y="-59">A_o2?</label>
+			<label kind="assignment" x="-238" y="-25">B_n1:=B_n2</label>
+			<nail x="-408" y="-127"/>
+			<nail x="-221" y="0"/>
+		</transition>
+		<transition id="id76">
+			<source ref="id72"/>
+			<target ref="id68"/>
+			<label kind="guard" x="-272" y="-136">B_n1==1</label>
+			<label kind="synchronisation" x="-280" y="-153">A_o1?</label>
+			<label kind="assignment" x="-255" y="-119">B_n1:=B_n2</label>
+			<nail x="-263" y="-110"/>
+		</transition>
+		<transition id="id77">
+			<source ref="id68"/>
+			<target ref="id72"/>
+			<label kind="synchronisation" x="-195" y="-195">B_o2?</label>
+			<label kind="assignment" x="-187" y="-178">B_n2:=2</label>
+			<nail x="-195" y="-161"/>
+		</transition>
+		<transition id="id78">
+			<source ref="id68"/>
+			<target ref="id72"/>
+			<label kind="synchronisation" x="-153" y="-263">B_o1?</label>
+			<label kind="assignment" x="-144" y="-246">B_n2:=1</label>
+			<nail x="-110" y="-204"/>
+			<nail x="-212" y="-263"/>
+		</transition>
+		<transition id="id79">
+			<source ref="id71"/>
+			<target ref="id70"/>
+			<label kind="guard" x="527" y="-442">A_n1!=2</label>
+			<label kind="synchronisation" x="518" y="-459">B_o2?</label>
+			<nail x="901" y="-425"/>
+			<nail x="365" y="-416"/>
+		</transition>
+		<transition id="id80">
+			<source ref="id71"/>
+			<target ref="id70"/>
+			<label kind="guard" x="637" y="-357">A_n1!=1</label>
+			<label kind="synchronisation" x="629" y="-374">B_o1?</label>
+			<nail x="841" y="-374"/>
+			<nail x="510" y="-382"/>
+		</transition>
+		<transition id="id81">
+			<source ref="id71"/>
+			<target ref="id69"/>
+			<label kind="guard" x="884" y="-76">A_n1==2</label>
+			<label kind="synchronisation" x="884" y="-93">B_o2?</label>
+			<label kind="assignment" x="901" y="-59">A_n1:=A_n2</label>
+			<nail x="952" y="-144"/>
+			<nail x="807" y="-34"/>
+		</transition>
+		<transition id="id82">
+			<source ref="id71"/>
+			<target ref="id69"/>
+			<label kind="guard" x="773" y="-153">A_n1==1</label>
+			<label kind="synchronisation" x="773" y="-170">B_o1?</label>
+			<label kind="assignment" x="782" y="-136">A_n1:=A_n2</label>
+			<nail x="781" y="-102"/>
+		</transition>
+		<transition id="id83">
+			<source ref="id69"/>
+			<target ref="id71"/>
+			<label kind="synchronisation" x="714" y="-212">A_o2?</label>
+			<label kind="assignment" x="714" y="-195">A_n2:=2</label>
+			<nail x="705" y="-187"/>
+		</transition>
+		<transition id="id84">
+			<source ref="id69"/>
+			<target ref="id71"/>
+			<label kind="synchronisation" x="637" y="-255">A_o1?</label>
+			<label kind="assignment" x="637" y="-238">A_n2:=1</label>
+			<nail x="637" y="-178"/>
+			<nail x="722" y="-255"/>
+		</transition>
+		<transition id="id85">
+			<source ref="id68"/>
+			<target ref="id70"/>
+			<label kind="guard" x="103" y="-179">B_n1!=2</label>
+			<label kind="synchronisation" x="103" y="-196">A_o2?</label>
+			<nail x="86" y="-170"/>
+		</transition>
+		<transition id="id86">
+			<source ref="id68"/>
+			<target ref="id70"/>
+			<label kind="guard" x="94" y="-255">B_n1!=1</label>
+			<label kind="synchronisation" x="94" y="-272">A_o1?</label>
+			<nail x="60" y="-230"/>
+		</transition>
+		<transition id="id87">
+			<source ref="id68"/>
+			<target ref="id67"/>
+			<label kind="guard" x="86" y="178">B_n2==2</label>
+			<label kind="synchronisation" x="86" y="161">A_o2?</label>
+			<nail x="-50" y="102"/>
+			<nail x="120" y="212"/>
+		</transition>
+		<transition id="id88">
+			<source ref="id68"/>
+			<target ref="id67"/>
+			<label kind="guard" x="94" y="102">B_n1==1</label>
+			<label kind="synchronisation" x="94" y="85">A_o1?</label>
+			<nail x="77" y="85"/>
+		</transition>
+		<transition id="id89">
+			<source ref="id67"/>
+			<target ref="id68"/>
+			<label kind="synchronisation" x="136" y="0">B_o2?</label>
+			<label kind="assignment" x="153" y="17">B_n1:=2</label>
+			<nail x="145" y="25"/>
+		</transition>
+		<transition id="id90">
+			<source ref="id67"/>
+			<target ref="id68"/>
+			<label kind="synchronisation" x="153" y="-77">B_o1?</label>
+			<label kind="assignment" x="145" y="-60">B_n1:=1</label>
+			<nail x="264" y="8"/>
+			<nail x="128" y="-68"/>
+		</transition>
+		<transition id="id91">
+			<source ref="id69"/>
+			<target ref="id70"/>
+			<label kind="guard" x="425" y="-153">A_n1!=2</label>
+			<label kind="synchronisation" x="434" y="-170">B_o2?</label>
+			<nail x="408" y="-145"/>
+		</transition>
+		<transition id="id92">
+			<source ref="id69"/>
+			<target ref="id70"/>
+			<label kind="guard" x="425" y="-229">A_n1!=1</label>
+			<label kind="synchronisation" x="425" y="-246">B_o1?</label>
+			<nail x="510" y="-204"/>
+		</transition>
+		<transition id="id93">
+			<source ref="id69"/>
+			<target ref="id67"/>
+			<label kind="guard" x="536" y="110">A_n1==2</label>
+			<label kind="synchronisation" x="544" y="93">B_o2?</label>
+			<nail x="621" y="68"/>
+			<nail x="544" y="161"/>
+		</transition>
+		<transition id="id94">
+			<source ref="id69"/>
+			<target ref="id67"/>
+			<label kind="guard" x="485" y="42">A_n1==1</label>
+			<label kind="synchronisation" x="493" y="25">B_o1?</label>
+			<nail x="527" y="76"/>
+		</transition>
+		<transition id="id95">
+			<source ref="id67"/>
+			<target ref="id69"/>
+			<label kind="synchronisation" x="374" y="8">A_o2?</label>
+			<label kind="assignment" x="366" y="25">A_n1:=2</label>
+			<nail x="425" y="17"/>
+		</transition>
+		<transition id="id96">
+			<source ref="id67"/>
+			<target ref="id69"/>
+			<label kind="synchronisation" x="358" y="-47">A_o1?</label>
+			<label kind="assignment" x="349" y="-26">A_n1:=1</label>
+			<nail x="340" y="-9"/>
+			<nail x="442" y="-51"/>
+		</transition>
+	</template>
+	<template>
+		<name>A_tfsm</name>
+		<declaration>clock x1, x2;</declaration>
+		<location id="id97" x="-714" y="-76">
+			<name x="-724" y="-110">s0</name>
+		</location>
+		<location id="id98" x="-586" y="-76">
+			<label kind="invariant" x="-595" y="-85">x1&lt;=3</label>
+		</location>
+		<location id="id99" x="-586" y="68">
+			<name x="-578" y="34">s1</name>
+		</location>
+		<location id="id100" x="-408" y="-153">
+			<label kind="invariant" x="-408" y="-170">(x1&lt;=3)&amp;&amp;
+(x2&lt;=1)</label>
+		</location>
+		<location id="id101" x="-272" y="-255">
+			<label kind="invariant" x="-255" y="-272">x1&lt;=1</label>
+		</location>
+		<location id="id102" x="-408" y="-8">
+			<label kind="invariant" x="-418" y="9">x1&lt;=3</label>
+		</location>
+		<location id="id103" x="-85" y="-161">
+			<label kind="invariant" x="-95" y="-144">(x1&lt;=3)&amp;&amp;
+(x2&lt;=3)</label>
+		</location>
+		<init ref="id97"/>
+		<transition id="id104">
+			<source ref="id103"/>
+			<target ref="id98"/>
+			<label kind="guard" x="-560" y="-399">x1==3</label>
+			<label kind="synchronisation" x="-560" y="-382">B_o1!</label>
+			<label kind="assignment" x="-560" y="-365">x1:=x2</label>
+			<nail x="-85" y="-365"/>
+			<nail x="-578" y="-365"/>
+		</transition>
+		<transition id="id105">
+			<source ref="id99"/>
+			<target ref="id101"/>
+			<label kind="synchronisation" x="-476" y="102">B_i2?</label>
+			<label kind="assignment" x="-476" y="119">x1:=0</label>
+			<nail x="-255" y="127"/>
+			<nail x="102" y="93"/>
+			<nail x="85" y="-246"/>
+		</transition>
+		<transition id="id106">
+			<source ref="id101"/>
+			<target ref="id97"/>
+			<label kind="guard" x="-501" y="-238">x1==1</label>
+			<label kind="synchronisation" x="-484" y="-221">B_o2!</label>
+			<nail x="-671" y="-195"/>
+		</transition>
+		<transition id="id107">
+			<source ref="id102"/>
+			<target ref="id103"/>
+			<label kind="synchronisation" x="-323" y="-25">B_i1?</label>
+			<label kind="assignment" x="-331" y="-8">x2:=0</label>
+			<nail x="-204" y="-8"/>
+		</transition>
+		<transition id="id108">
+			<source ref="id100"/>
+			<target ref="id102"/>
+			<label kind="guard" x="-408" y="-93">x2==1</label>
+			<label kind="synchronisation" x="-399" y="-76">B_o2!</label>
+		</transition>
+		<transition id="id109">
+			<source ref="id100"/>
+			<target ref="id101"/>
+			<label kind="guard" x="-314" y="-229">x1==3</label>
+			<label kind="synchronisation" x="-314" y="-212">B_o1!</label>
+			<label kind="assignment" x="-314" y="-195">x1:=x2</label>
+		</transition>
+		<transition id="id110">
+			<source ref="id98"/>
+			<target ref="id99"/>
+			<label kind="guard" x="-586" y="-46">x1==3</label>
+			<label kind="synchronisation" x="-586" y="-29">B_o1!</label>
+		</transition>
+		<transition id="id111">
+			<source ref="id98"/>
+			<target ref="id100"/>
+			<label kind="synchronisation" x="-535" y="-153">B_i2?</label>
+			<label kind="assignment" x="-527" y="-136">x2:=0</label>
+		</transition>
+		<transition id="id112">
+			<source ref="id97"/>
+			<target ref="id98"/>
+			<label kind="synchronisation" x="-696" y="-93">B_i1?</label>
+			<label kind="assignment" x="-696" y="-76">x1:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name>A_in_tfsm</name>
+		<parameter>const int u1, const int v1, const int u2, const int v2</parameter>
+		<location id="id113" x="-1054" y="-391">
+			<name x="-1064" y="-425">q0</name>
+		</location>
+		<location id="id114" x="-816" y="-391">
+			<name x="-826" y="-425">q1</name>
+		</location>
+		<init ref="id113"/>
+		<transition id="id115">
+			<source ref="id114"/>
+			<target ref="id113"/>
+			<label kind="guard" x="-986" y="-348">(t&gt;u2)&amp;&amp;(t&lt;v2)</label>
+			<label kind="synchronisation" x="-952" y="-365">A_i2!</label>
+			<label kind="assignment" x="-952" y="-331">t:=0</label>
+			<nail x="-850" y="-331"/>
+			<nail x="-1011" y="-331"/>
+		</transition>
+		<transition id="id116">
+			<source ref="id113"/>
+			<target ref="id114"/>
+			<label kind="guard" x="-1003" y="-484">(t&gt;u1)&amp;&amp;(t&lt;v1)</label>
+			<label kind="synchronisation" x="-960" y="-501">A_i1!</label>
+			<label kind="assignment" x="-960" y="-459">t:=0</label>
+			<nail x="-1028" y="-459"/>
+			<nail x="-858" y="-459"/>
+		</transition>
+	</template>
+	<template>
+		<name>A_out_tfsm</name>
+		<location id="id117" x="-1317" y="-561">
+			<name x="-1327" y="-595">q0</name>
+		</location>
+		<init ref="id117"/>
+		<transition id="id118">
+			<source ref="id117"/>
+			<target ref="id117"/>
+			<label kind="synchronisation" x="-1343" y="-510">A_o2?</label>
+			<nail x="-1275" y="-510"/>
+			<nail x="-1360" y="-510"/>
+		</transition>
+		<transition id="id119">
+			<source ref="id117"/>
+			<target ref="id117"/>
+			<label kind="synchronisation" x="-1343" y="-646">A_o1?</label>
+			<nail x="-1360" y="-620"/>
+			<nail x="-1266" y="-620"/>
+		</transition>
+	</template>
+	<template>
+		<name>B_tfsm</name>
+		<declaration>clock x1, x2;</declaration>
+		<location id="id120" x="-1445" y="-212">
+			<name x="-1470" y="-238">s0</name>
+		</location>
+		<location id="id121" x="-1309" y="-212">
+			<name x="-1319" y="-246">St1</name>
+			<label kind="invariant" x="-1317" y="-221">x1&lt;=2</label>
+		</location>
+		<location id="id122" x="-1309" y="-93">
+			<name x="-1334" y="-127">s1</name>
+		</location>
+		<location id="id123" x="-1190" y="-272">
+			<name x="-1200" y="-306">St2</name>
+			<label kind="invariant" x="-1190" y="-280">(x1&lt;=2)&amp;&amp;
+(x2&lt;=2)</label>
+		</location>
+		<location id="id124" x="-1071" y="-178">
+			<name x="-1081" y="-212">St3</name>
+			<label kind="invariant" x="-1079" y="-187">x1&lt;=2</label>
+		</location>
+		<location id="id125" x="-943" y="-331">
+			<name x="-953" y="-365">St4</name>
+			<label kind="invariant" x="-952" y="-340">x1&lt;=2</label>
+		</location>
+		<location id="id126" x="-714" y="-246">
+			<name x="-724" y="-280">St5</name>
+			<label kind="invariant" x="-723" y="-254">(x1&lt;=2)&amp;&amp;
+(x2&lt;=2)</label>
+		</location>
+		<location id="id127" x="-884" y="-17">
+			<name x="-867" y="-51">St6</name>
+			<label kind="invariant" x="-892" y="-25">x1&lt;=2</label>
+		</location>
+		<init ref="id120"/>
+		<transition id="id128">
+			<source ref="id127"/>
+			<target ref="id122"/>
+			<label kind="guard" x="-1054" y="-51">x1==2</label>
+			<label kind="synchronisation" x="-1045" y="-34">A_o2!</label>
+			<nail x="-1139" y="-8"/>
+		</transition>
+		<transition id="id129">
+			<source ref="id122"/>
+			<target ref="id125"/>
+			<label kind="synchronisation" x="-960" y="-238">A_i1?</label>
+			<label kind="assignment" x="-952" y="-221">x1:=0</label>
+			<nail x="-1003" y="-110"/>
+		</transition>
+		<transition id="id130">
+			<source ref="id126"/>
+			<target ref="id121"/>
+			<label kind="guard" x="-1291" y="-497">x1==2</label>
+			<label kind="synchronisation" x="-1291" y="-480">A_o2!</label>
+			<label kind="assignment" x="-1291" y="-463">x1:=x2</label>
+			<nail x="-714" y="-467"/>
+			<nail x="-1309" y="-459"/>
+		</transition>
+		<transition id="id131">
+			<source ref="id125"/>
+			<target ref="id120"/>
+			<label kind="guard" x="-1419" y="-399">x1==2</label>
+			<label kind="synchronisation" x="-1411" y="-374">A_o2!</label>
+			<nail x="-1445" y="-382"/>
+		</transition>
+		<transition id="id132">
+			<source ref="id124"/>
+			<target ref="id120"/>
+			<label kind="guard" x="-1351" y="25">x1==2</label>
+			<label kind="synchronisation" x="-1343" y="42">A_o1!</label>
+			<nail x="-1241" y="34"/>
+			<nail x="-1402" y="-8"/>
+		</transition>
+		<transition id="id133">
+			<source ref="id126"/>
+			<target ref="id127"/>
+			<label kind="guard" x="-782" y="-153">x2==2</label>
+			<label kind="synchronisation" x="-773" y="-136">A_o1!</label>
+		</transition>
+		<transition id="id134">
+			<source ref="id125"/>
+			<target ref="id126"/>
+			<label kind="synchronisation" x="-841" y="-314">A_i1?</label>
+			<label kind="assignment" x="-824" y="-297">x2:=0</label>
+		</transition>
+		<transition id="id135">
+			<source ref="id123"/>
+			<target ref="id124"/>
+			<label kind="guard" x="-1139" y="-238">x2==2</label>
+			<label kind="synchronisation" x="-1122" y="-221">A_o2!</label>
+		</transition>
+		<transition id="id136">
+			<source ref="id123"/>
+			<target ref="id125"/>
+			<label kind="guard" x="-1113" y="-340">x1==2</label>
+			<label kind="synchronisation" x="-1096" y="-323">A_o1!</label>
+			<label kind="assignment" x="-1096" y="-306">x1:=x2</label>
+		</transition>
+		<transition id="id137">
+			<source ref="id121"/>
+			<target ref="id123"/>
+			<label kind="synchronisation" x="-1275" y="-263">A_i2?</label>
+			<label kind="assignment" x="-1258" y="-246">x2:=0</label>
+		</transition>
+		<transition id="id138">
+			<source ref="id121"/>
+			<target ref="id122"/>
+			<label kind="guard" x="-1360" y="-178">x1==2</label>
+			<label kind="synchronisation" x="-1351" y="-161">A_o1!</label>
+		</transition>
+		<transition id="id139">
+			<source ref="id120"/>
+			<target ref="id121"/>
+			<label kind="synchronisation" x="-1427" y="-229">A_i1?</label>
+			<label kind="assignment" x="-1427" y="-212">x1:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name>B_in_tfsm</name>
+		<parameter>const int u1, const int v1, const int u2, const int v2</parameter>
+		<location id="id140" x="-323" y="-93">
+			<name x="-333" y="-127">s0</name>
+		</location>
+		<location id="id141" x="-76" y="-102">
+			<name x="-86" y="-136">s1</name>
+		</location>
+		<init ref="id140"/>
+		<transition id="id142">
+			<source ref="id141"/>
+			<target ref="id140"/>
+			<label kind="guard" x="-262" y="-76">(t&gt;u1)&amp;&amp;(t&lt;v1)</label>
+			<label kind="synchronisation" x="-262" y="-59">B_i2!</label>
+			<label kind="assignment" x="-262" y="-42">t:=0</label>
+			<nail x="-110" y="-42"/>
+			<nail x="-280" y="-42"/>
+		</transition>
+		<transition id="id143">
+			<source ref="id140"/>
+			<target ref="id141"/>
+			<label kind="guard" x="-279" y="-195">(t&gt;u1)&amp;&amp;(t&lt;v1)</label>
+			<label kind="synchronisation" x="-279" y="-178">B_i1!</label>
+			<label kind="assignment" x="-279" y="-161">t:=0</label>
+			<nail x="-297" y="-161"/>
+			<nail x="-136" y="-161"/>
+		</transition>
+	</template>
+	<template>
+		<name>B_out_tfsm</name>
+		<location id="id144" x="-212" y="-85">
+			<name x="-222" y="-119">s0</name>
+		</location>
+		<init ref="id144"/>
+		<transition id="id145">
+			<source ref="id144"/>
+			<target ref="id144"/>
+			<label kind="synchronisation" x="-238" y="-42">B_o2?</label>
+			<nail x="-170" y="-42"/>
+			<nail x="-263" y="-42"/>
+		</transition>
+		<transition id="id146">
+			<source ref="id144"/>
+			<target ref="id144"/>
+			<label kind="synchronisation" x="-238" y="-153">B_o1?</label>
+			<nail x="-272" y="-136"/>
+			<nail x="-170" y="-136"/>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+//Process = Template();
+// List one or more processes to be composed into a system.
+//system Process;
+
+const int u1 = 1;
+const int v1 = 2;
+const int u2 = 1;
+const int v2 = 3;
+
+//IN_TA = A_in_tfsm(u1, v1, u2, v2);
+//OUT_TA = A_out_tfsm();
+//TA_A = A_tfsm();
+
+//IN_TA_B = B_in_tfsm(u1, v1, u2, v2);
+//OUT_TA_B = B_out_tfsm();
+//TA_B = B_tfsm();
+
+//IN_TA_mut = A_in_mutant(u1, v1, u2, v2);
+//OUT_TA_mut = A_out_mutant();
+//TA_mut = A_mutant();
+
+
+IN_AB = AB_in(u1, v1, u2, v2);
+OUT_AB = AB_out();
+
+// A_mutant is equiv to B
+//TA_mut = A_mutant();
+//TA_B = B_tfsm();
+//system TA_B , TA_mut, IN_AB, OUT_AB;
+
+// A is not equiv to B
+TA_A = A_tfsm();
+TA_B = B_tfsm();
+//system TA_B , TA_A, IN_AB, OUT_AB;
+
+SDN_ta = SDN();
+SDN_env = SDN_ENV();
+system SDN_ta, SDN_env;
+</system>
+	<queries>
+		<option key="--diagnostic" value="1"/>
+		<query>
+			<formula>E&lt;&gt;((l0==true)&amp;&amp;(l1==true)&amp;&amp;(l2==true)&amp;&amp;(l3==true))</formula>
+			<comment/>
+		</query>
+		<query>
+			<formula>E&lt;&gt;((e0==true)&amp;&amp;(e1==true)&amp;&amp;(e2==true)&amp;&amp;(e3==true))</formula>
+			<comment/>
+		</query>
+		<query>
+			<formula>E&lt;&gt;(OUT_AB.ERROR)</formula>
+			<comment/>
+		</query>
+	</queries>
+</nta>
