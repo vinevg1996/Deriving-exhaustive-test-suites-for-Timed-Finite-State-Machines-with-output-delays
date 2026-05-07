@@ -1,0 +1,39 @@
+- name: Check port and close if open
+  hosts: myhosts
+  gather_facts: false
+  become: yes
+
+  tasks:
+    - name: Record start time
+      command: date +%s%N
+      register: start_open
+
+    - name: Allow port 12345/tcp
+      ufw:
+        rule: allow
+        port: '12345'
+        proto: tcp
+
+    - name: Check if port 12345 is open
+      command: ss -tuln
+      register: port_check
+      changed_when: false
+
+    - name: Determine if port is open
+      set_fact:
+        port_open: "{{ port_check.stdout is search(':12345 ') }}"
+
+    - name: Kill process using port 12345
+      shell: fuser -k 12345/tcp || true
+      when: port_open
+
+    - name: Record end time
+      command: date +%s%N
+      register: end_open
+
+    - name: Print execution time
+      debug:
+        msg: >
+          close port task time: {{
+            ((end_open.stdout | int) - (start_open.stdout | int)) / 1000000
+          }} ms

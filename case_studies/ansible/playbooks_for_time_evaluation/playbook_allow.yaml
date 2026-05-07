@@ -1,0 +1,38 @@
+- name: Temporarily allow traffic on port 12345
+  hosts: myhosts
+  gather_facts: false
+  become: yes
+
+  tasks:
+    - name: Record start time (open port)
+      command: date +%s%N
+      register: start_open
+
+    - name: Check if DROP rule exists
+      command: iptables -C INPUT -i lo -p tcp --dport 12345 -j DROP
+      register: rule_check
+      ignore_errors: yes
+      changed_when: false
+
+    - name: Set fact if rule exists
+      set_fact:
+        rule_exists: "{{ rule_check.rc == 0 }}"
+
+    - name: Remove DROP rule (allow traffic)
+      command: iptables -D INPUT -i lo -p tcp --dport 12345 -j DROP
+      when: rule_exists
+
+    - name: Restore DROP rule (block traffic again)
+      command: iptables -I INPUT 1 -i lo -p tcp --dport 12345 -j DROP
+      when: rule_exists
+
+    - name: Record end time (open port)
+      command: date +%s%N
+      register: end_open
+
+    - name: Print open port execution time
+      debug:
+        msg: >
+          allow task time: {{
+            ((end_open.stdout | int) - (start_open.stdout | int)) / 1000000
+          }} ms

@@ -1,0 +1,22 @@
+- name: Check port and firewall, then send message
+  hosts: myhosts
+  gather_facts: false
+
+  tasks:
+    - name: Record start time (open port)
+      command: date +%s%N
+      register: start_open
+
+    - name: Send "hello" to port 12345
+      command: echo "hello" | nc 127.0.0.1 12345
+
+    - name: Record end time (open port)
+      command: date +%s%N
+      register: end_open
+
+    - name: Print open port execution time
+      debug:
+        msg: >
+          send task time: {{
+            ((end_open.stdout | int) - (start_open.stdout | int)) / 1000000
+          }} ms

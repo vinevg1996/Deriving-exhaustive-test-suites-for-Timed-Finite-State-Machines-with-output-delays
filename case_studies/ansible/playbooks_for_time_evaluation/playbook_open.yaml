@@ -1,0 +1,34 @@
+- name: Check port and open in background if closed
+  hosts: myhosts
+  gather_facts: false
+
+  tasks:
+    - name: Record start time (open port)
+      command: date +%s%N
+      register: start_open
+
+    - name: Check if port 12345 is open
+      command: ss -tuln
+      register: port_check
+      changed_when: false
+
+    - name: Determine if port is open
+      set_fact:
+        port_open: "{{ port_check.stdout is search(':12345 ') }}"
+
+    - name: Start listener on port 12345 in background
+      shell: nc -l -p 12345 >/dev/null 2>&1 &
+      when: not port_open
+      async: 0
+      poll: 0
+
+    - name: Record end time (open port)
+      command: date +%s%N
+      register: end_open
+
+    - name: Print open port execution time
+      debug:
+        msg: >
+          open task time: {{
+            ((end_open.stdout | int) - (start_open.stdout | int)) / 1000000
+          }} ms

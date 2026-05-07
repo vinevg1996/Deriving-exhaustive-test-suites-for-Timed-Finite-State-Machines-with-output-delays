@@ -1,0 +1,34 @@
+- name: Ensure port 12345 is blocked on loopback
+  hosts: myhosts
+  gather_facts: false
+  become: yes
+
+  tasks:
+    - name: Record start time (open port)
+      command: date +%s%N
+      register: start_open
+
+    - name: Check if DROP rule exists
+      command: iptables -C INPUT -i lo -p tcp --dport 12345 -j DROP
+      register: rule_check
+      ignore_errors: yes
+      changed_when: false
+
+    - name: Set fact if rule exists
+      set_fact:
+        rule_exists: "{{ rule_check.rc == 0 }}"
+
+    - name: Add DROP rule if not present
+      command: iptables -I INPUT 1 -i lo -p tcp --dport 12345 -j DROP
+      when: not rule_exists
+
+    - name: Record end time (open port)
+      command: date +%s%N
+      register: end_open
+
+    - name: Print open port execution time
+      debug:
+        msg: >
+          open port task time: {{
+            ((end_open.stdout | int) - (start_open.stdout | int)) / 1000000
+          }} ms
