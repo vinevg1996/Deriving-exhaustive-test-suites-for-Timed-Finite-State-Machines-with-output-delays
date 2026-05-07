@@ -2,7 +2,7 @@
 
 ## Reproducing the Experiments
 
-To reproduce the experiments with **random TFSMs** or **case-studies TFSMs**, run:
+To reproduce the experiments with **random TFSMs** or **case studies TFSMs**, run:
 
 ```bash
 python3 main.py
@@ -18,9 +18,9 @@ Random machines with \(n = 5, 6, ..., 20\) states are located in:
 random_fsms/fsms/
 ```
 
-### Case-Studies FSMs and TFSMs
+### The specification FSMs, TFSMs and TIOAs of case studies
 
-The FSMs and TFSMs used in the case studies are located in:
+The FSMs, TFSMs and TIOAs used in the case studies are located in:
 
 ```text
 case_studies/ansible/
