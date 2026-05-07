@@ -12,7 +12,7 @@ Then follow the instructions displayed by the program.
 
 ### Random TFSMs
 
-Random machines with \(n = 5, 6, \ldots, 20\) states are located in:
+Random machines with \(n = 5, 6, ..., 20\) states are located in:
 
 ```text
 random_fsms/fsms/
@@ -27,7 +27,7 @@ case_studies/ansible/
 case_studies/sdn/
 ```
 
-Additional FSMs are also available in:
+Random machines are also available in:
 
 ```text
 random_fsms/fsms/
