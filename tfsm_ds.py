@@ -109,18 +109,30 @@ class Node_for_testing:
                         u_max = max(u_s, u_q)
                         v_min = min(v_s, v_q)
                         if u_max < v_min:
-                            t = float(u_max + v_min) / 2
                             time = float(self.tis.time)
-                            tis_i_t = copy.deepcopy(self.tis)
-                            tis_i_t.sequence.append((i, time+t))
-                            tis_i_t.update_time()
-                            next_node = Node_for_testing(self.tfsm_spec, self.tfsm_impl, self.s0, self.q0, next_s, next_q, tis_i_t, self.max_len, self)
-                            next_node.study_status()
-                            self.children.append(next_node)
-                            if next_node.tis_is_ds:
-                                return next_node.tis
-                            if next_node.level < self.max_len:
-                                succs.append(next_node)
+                            # left
+                            tis_i_t_left = copy.deepcopy(self.tis)
+                            tis_i_t_left.sequence.append((i, time+u_max))
+                            tis_i_t_left.update_time()
+                            next_node_left = Node_for_testing(self.tfsm_spec, self.tfsm_impl, self.s0, self.q0, next_s, next_q, tis_i_t_left, self.max_len, self)
+                            next_node_left.study_status()
+                            #self.children.append(next_node_left)
+                            if next_node_left.tis_is_ds:
+                                return next_node_left.tis
+                            if next_node_left.level < self.max_len:
+                                succs.append(next_node_left)
+                            # right
+                            tis_i_t_right = copy.deepcopy(self.tis)
+                            t_right = v_min - (2 ** (-(self.level+1)))
+                            tis_i_t_right.sequence.append((i, time + t_right))
+                            tis_i_t_right.update_time()
+                            next_node_right = Node_for_testing(self.tfsm_spec, self.tfsm_impl, self.s0, self.q0, next_s, next_q, tis_i_t_right, self.max_len, self)
+                            next_node_right.study_status()
+                            #self.children.append(next_node_right)
+                            if next_node_right.tis_is_ds:
+                                return next_node_right.tis
+                            if next_node_right.level < self.max_len:
+                                succs.append(next_node_right)
         return None
 
     def print_node(self):

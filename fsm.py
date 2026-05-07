@@ -167,6 +167,8 @@ class FSM:
                     return seq
         return None
 
+
+
 class FSM_FirstOrderTestSuiteGeneration:
     def __init__(self, fsm_spec):
         self.fsm_spec = fsm_spec

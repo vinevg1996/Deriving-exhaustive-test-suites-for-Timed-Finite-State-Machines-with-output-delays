@@ -105,6 +105,7 @@ class TimedTransitionTour:
             ttt_mean_seq = TimedSequence([])
             ttt_right_seq = TimedSequence([])
             ttt_random_seq = TimedSequence([])
+            step = 1 / float(len(ttt_seq))
             for tran_name in ttt_seq:
                 tran = my_tfsm.transition_dict[tran_name]
                 timestamp_left = int(tran.time_guard[0]) + step

@@ -202,7 +202,8 @@ class RaceFreeTFSMs:
                 for time_guard in tfsm_dict[current_state][input].keys():
                     t_local = t - t_previous
                     #if (t_local > time_guard[0]) and (t_local < time_guard[1]):
-                    if (t_local > time_guard[0]) and (t_local <= time_guard[1]):
+                    #if (t_local > time_guard[0]) and (t_local <= time_guard[1]):
+                    if (t_local >= time_guard[0]) and (t_local < time_guard[1]):
                         tran = tfsm_dict[current_state][input][time_guard]
                         found_transition = True
                         output_time = t + tran.delay
@@ -215,6 +216,14 @@ class RaceFreeTFSMs:
         timed_output_seq = sorted(output_set, key=lambda x: x[1])
         output_seq = [x[0] for x in timed_output_seq]
         return output_seq
+
+    def print_tfsm(self):
+        for s in self.tfsm.tfsm.keys():
+            for i in self.tfsm.tfsm[s]:
+                for g in self.tfsm.tfsm[s][i]:
+                    self.tfsm.tfsm[s][i][g].print()
+                    #self.tfsm.tfsm[s][i][g].print_tran()
+        return
 
 class TFSM:
     def __init__(self):
